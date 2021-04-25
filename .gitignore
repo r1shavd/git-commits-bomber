@@ -1,0 +1,6 @@
+# The ignore list for the git-commits-bomber
+
+# Ignoring the test and cache files and folder
+__pycache__/
+tests/
+test/
