@@ -59,7 +59,6 @@ if [[ ${choice} == "1" ]]; then
 	echo -e "\nSome points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure that you are currently in the folder that you want to make a GIT repository, otherwise wrong folders might be created as the GIT repositories.\n4. If you enter the remote origin, check after the process to make sure remote origin is pushed. Many times it fails to do so.\n"
 
 	# Asking the user for the repository name to be initialized
-	echo -e ""
 	read -p "Enter the repository name : " $repositoryName
 
 	# Asking for the remote origin for the GIT repository
@@ -69,8 +68,26 @@ if [[ ${choice} == "1" ]]; then
 elif [[ ${choice} == "2" ]]; then
 	# If the user entered the option to mass commit an existing GIT repository, then we continue to complete the task
 
+	# Displaying some warning messages to the user
 	clear
-	echo -e "TO BE UPDATED"
+	echo -e "\nSome points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. After the commits bombing, don't forget to push the changes to the remote origin.\n"
+
+	# Asking the user for the amount of commits that are to be made
+	read -p "Enter the amount of commits : " amountOfCommits
+
+	# Starting the bombing process
+	echo "\nSTARTING THE COMMITS BOMBING...[!]"
+	startedOn=$( date )
+	for commitNumber in $( seq 1 ${amountOfCommits} ); do
+		# First making changes in the source files for allowing for the commits
+		echo "Change for the commit-${commitNumber} on $( date ). This commit was made for the mass commit bombing started on ${startedOn}" >> test.txt
+
+		# Calling the commits bomber function in order to do a commit with currently made changes
+		commitBomber
+		echo -e "[!] Commit-${commitNumber} made successfully"
+	done
+
+	echo -e "\nFINISHED COMMITS BOMBING...[!]"
 elif [[ ${choice} == "0" ]]; then
 	# If the user entered the option to exit the script, then we exit the script
 
