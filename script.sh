@@ -18,11 +18,12 @@ function setRepository {
 	repositoryName=$1
 
 	# Writting the README.md documentation file
-	echo "# ${repositoryName}
+	echo -e "# ${repositoryName}
 
 The documentation yet to be updated." > README.md
 
 	# Doing the initial commit for the current repository
+	command=$( git init )
 	command=$( git add --a )
 	command=$( git commit -m "Initial commit")
 	command=$( git branch -M main )
@@ -46,23 +47,30 @@ The documentation yet to be updated." > README.md
 # The main script starts here
 
 # Printing the main menu to the user and asking to enter an option
-echo -e "Choose any of the options below : "
-
-1. Initialize a GIT repository
-2. Mass commit a GIT repository
-0. Exit
-"
+printf "Choose any of the options below :\n\n1. Initialize a GIT repository\n2. Mass commit a GIT repository\n0. Exit\n\n"
 read -p "Enter your choice : " choice
 
 # Checking the user entered option
 if [[ ${choice} == "1" ]]; then
 	# If the user entered the option to initialize a new GIT repository, then we continue to complete the task
 
-	#
+	# Displaying some warning messages to the user
+	clear
+	echo -e "\nSome points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure that you are currently in the folder that you want to make a GIT repository, otherwise wrong folders might be created as the GIT repositories.\n4. If you enter the remote origin, check after the process to make sure remote origin is pushed. Many times it fails to do so.\n"
+
+	# Asking the user for the repository name to be initialized
+	echo -e ""
+	read -p "Enter the repository name : " $repositoryName
+
+	# Asking for the remote origin for the GIT repository
+	read -p "Enter the remote origin for the repository [ leave blank if none ] : " $remoteOrigin
+
+	setRepository "${repositoryName}" "${remoteOrigin}"
 elif [[ ${choice} == "2" ]]; then
 	# If the user entered the option to mass commit an existing GIT repository, then we continue to complete the task
 
-	#
+	clear
+	echo -e "TO BE UPDATED"
 elif [[ ${choice} == "0" ]]; then
 	# If the user entered the option to exit the script, then we exit the script
 
