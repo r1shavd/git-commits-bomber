@@ -47,7 +47,7 @@ The documentation yet to be updated." > README.md
 # The main script starts here
 
 # Printing the main menu to the user and asking to enter an option
-printf "Choose any of the options below :\n\n1. Initialize a GIT repository\n2. Mass commit a GIT repository\n3. Fixed file mass commit bombing0. Exit\n\n"
+printf "Choose any of the options below :\n\n1. Initialize a GIT repository\n2. Mass commit bombing [default] \n3. Fixed file mass commit bombing\n4. Mass commit bombing with reseting the file [default]\n5. Fixed file mass commit bombing with reseting the file\n0. Exit\n\n"
 read -p "Enter your choice : " choice
 
 # Checking the user entered option
@@ -109,7 +109,59 @@ elif [[ ${choice} == "3" ]]; then
 	startedOn=$( date )
 	for commitNumber in $( seq 1 ${amountOfCommits} ); do
 		# First making changes in the source files for allowing for the commits
-		echo "Change for the commit-${commitNumber} on $( date ). This commit was made for the mass commit bombing started on ${startedOn}" >> filename
+		echo "Change for the commit-${commitNumber} on $( date ). This commit was made for the mass commit bombing started on ${startedOn}" >> $filename
+
+		# Calling the commits bomber function in order to do a commit with currently made changes
+		commitBomber
+		echo -e "[!] Commit-${commitNumber} made successfully"
+	done
+
+	echo -e "\nFINISHED COMMITS BOMBING...[!]"
+elif [[ ${choice} == "4" ]]; then
+	# If the user choosed the option to mass commit an existing GIT repository but with reseting the file at every change, then we continue to complete the task
+
+	# Displaying some warning messages to the user
+	clear
+	echo -e "\nSome points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. After the commits bombing, don't forget to push the changes to the remote origin.\n"
+
+	# Asking the user for the amount of commits that are to be made
+	read -p "Enter the amount of commits : " amountOfCommits
+
+	# Starting the bombing process
+	echo -e "\nSTARTING THE COMMITS BOMBING...[!]"
+	echo -e "Changes will be made by default to the file 'test.txt'...[!]"
+	echo -e ""
+	startedOn=$( date )
+	for commitNumber in $( seq 1 ${amountOfCommits} ); do
+		# First making changes in the source files for allowing for the commits
+		echo "Change for the commit-${commitNumber} on $( date ). This commit was made for the mass commit bombing started on ${startedOn}. Mass commit mode : Reseting the file on every change (commit)." > test.txt
+
+		# Calling the commits bomber function in order to do a commit with currently made changes
+		commitBomber
+		echo -e "[!] Commit-${commitNumber} made successfully"
+	done
+
+	echo -e "\nFINISHED COMMITS BOMBING...[!]"
+elif [[ ${choice} == "5" ]]; then
+	# If the user choosed the option to mass commit an existing GIT repository but with reseting the user specified file at every change, then we continue to complete the task
+
+	# Displaying some warning messages to the user
+	clear
+	echo -e "\nSome points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. Make sure the filename you entered is of proper extension.\n4. After the commits bombing, don't forget to push the changes to the remote origin.\n"
+
+	# Asking the user for the amount of commits that are to be made
+	read -p "Enter the amount of commits : " amountOfCommits
+
+	# Asking for the filename with extension to which changes are to be made
+	read -p "Enter the filename [with extension] to which changes are to be made : " filename
+
+	# Starting the bombing process
+	echo -e "\nSTARTING THE COMMITS BOMBING...[!]"
+	echo -e "Changes are to be made to the file '${filename}'...[!]"
+	startedOn=$( date )
+	for commitNumber in $( seq 1 ${amountOfCommits} ); do
+		# First making changes in the source files for allowing for the commits
+		echo "Change for the commit-${commitNumber} on $( date ). This commit was made for the mass commit bombing started on ${startedOn}. Mass commit mode : Reseting the file on every change (commit)." > $filename
 
 		# Calling the commits bomber function in order to do a commit with currently made changes
 		commitBomber
