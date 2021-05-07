@@ -1,7 +1,26 @@
-# The bash script for mass bombing the git commits for a particular repository.
+# ----
+# GIT Commits Bomber
 #
-# Author : Rishav Das
+# A tool which provides the features of mass commits bombing in any respective GIT repository. Leave the bomber on for a day, and your repository may reach a million fake commits. The repository's commits signature depends upon the user's GPG key verification with github / gitlab / any git web-service he/she is using. The tool is written in shell scripting / bash scripting. Warning : The tool is created for testing and fun purpose, do not intend it to use for any further malicious purposes. Otherwise, you and only you will be responsible for that incident.
+# You can freely check the source code, and even you can contribute to this project to make it more better. Contribute either in the main shell script, or just do it in the docs section. This project lacks a proper documentation anyways.
 #
+# Dependencies :
+# 1. git (cli client)
+#
+# Author : Rishav Das (https://github.com/rdofficial/)
+# Created on : April 25, 2021
+#
+# Last modified by : Rishav Das (https://github.com/rdofficial/)
+# Last modified on : - May 7, 2021
+#
+# Changed made in last modification :
+# 1. Added commented docs.
+# 2. Added the feature of colored output and edited some printing errors and else.
+#
+# Authors contributed to this script (Add your name below if you have contributed) :
+# 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
+#
+# ----
 
 # First, we define all the functions that are used in this script
 
@@ -21,31 +40,41 @@ function emptyCommit {
 
 # The main script starts here
 
+# Defining the ANSII color code variables for colored output
+RED="\033[91m"
+GREEN="\033[92m"
+YELLOW="\033[93m"
+BLUE="\033[94m"
+RED_REV="\033[07;91m"
+YELLOW_REV="\033[07;93m"
+DEFCOL="\033[00m"
+
+# Printing the heading on the console screen
+echo -e "${YELLOW_REV}[ GIT Commits Bomber ]${DEFCOL}\n"
+
 # Printing the main menu to the user and asking to enter an option
-printf "Choose any of the options below :\n\n1. Initialize a GIT repository\n2. Mass commit bombing [default] \n3. Fixed file mass commit bombing\n4. Mass commit bombing with reseting the file [default]\n5. Fixed file mass commit bombing with reseting the file\n0. Exit\n\n"
 echo -e "Choose any of the options below :"
-echo -e "[1] Default mass commits bombing"
-echo -e "[2] Fixed file mass commits bombing"
-echo -e "[3] Default mass commits bombing with resetting the file every commit"
-echo -e "[4] Fixed file mass commits bombing with resetting the file every commit"
-echo -e "[5] Mass empty commits\n"
+echo -e "${YELLOW}[${DEFCOL}1${YELLOW}]${DEFCOL} Default mass commits bombing"
+echo -e "${YELLOW}[${DEFCOL}2${YELLOW}]${DEFCOL} Fixed file mass commits bombing"
+echo -e "${YELLOW}[${DEFCOL}3${YELLOW}]${DEFCOL} Default mass commits bombing with resetting the file every commit"
+echo -e "${YELLOW}[${DEFCOL}4${YELLOW}]${DEFCOL} Fixed file mass commits bombing with resetting the file every commit"
+echo -e "${YELLOW}[${DEFCOL}5${YELLOW}]${DEFCOL} Empty mass commits\n"
 read -p "Enter your choice : " choice
 
 # Checking the user entered option
-if [[ ${choice} == "1" ]]; then
+if [[ $choice == "1" ]]; then
 	# If the user entered the option to mass commit an existing GIT repository, then we continue to complete the task
 
 	# Displaying some warning messages to the user
 	clear
-	echo -e "\nSome points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. After the commits bombing, don't forget to push the changes to the remote origin.\n"
+	echo -e "\n${RED}[${DEFCOL} Some points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. After the commits bombing, don't forget to push the changes to the remote origin. ${RED}]${DEFCOL}\n"
 
 	# Asking the user for the amount of commits that are to be made
 	read -p "Enter the amount of commits : " amountOfCommits
 
 	# Starting the bombing process
-	echo -e "\nSTARTING THE COMMITS BOMBING...[!]"
-	echo -e "Changes will be made by default to the file 'test.txt'...[!]"
-	echo -e ""
+	echo -e "\n${BLUE}STARTING THE COMMITS BOMBING...${DEFCOL}[${YELLOW}!${DEFCOL}]"
+	echo -e "Changes will be made by default to the file '${GREEN}test.txt${DEFCOL}'...[${YELLOW}!${DEFCOL}]\n"
 	startedOn=$( date )
 	for commitNumber in $( seq 1 ${amountOfCommits} ); do
 		# First making changes in the source files for allowing for the commits
@@ -53,16 +82,16 @@ if [[ ${choice} == "1" ]]; then
 
 		# Calling the commits bomber function in order to do a commit with currently made changes
 		commit
-		echo -e "[!] Commit-${commitNumber} made successfully"
+		echo -e "[${GREEN}!${DEFCOL}] Commit-${GREEN}${commitNumber}${DEFCOL} made successfully"
 	done
 
-	echo -e "\nFINISHED COMMITS BOMBING...[!]"
-elif [[ ${choice} == "2" ]]; then
+	echo -e "\nFINISHED COMMITS BOMBING...[${GREEN}!${DEFCOL}]"
+elif [[ $choice == "2" ]]; then
 	# If the user entered the option to mass commit an existing GIT repository with changing just a fixed file, then we continue to complete the task
 
 	# Displaying some warning messages to the user
 	clear
-	echo -e "\nSome points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. Make sure the filename you entered is of proper extension.\n4. After the commits bombing, don't forget to push the changes to the remote origin.\n"
+	echo -e "\n${RED}[${DEFCOL} Some points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. Make sure the filename you entered is of proper extension.\n4. After the commits bombing, don't forget to push the changes to the remote origin. ${RED}]${DEFCOL}\n"
 
 	# Asking the user for the amount of commits that are to be made
 	read -p "Enter the amount of commits : " amountOfCommits
@@ -71,8 +100,8 @@ elif [[ ${choice} == "2" ]]; then
 	read -p "Enter the filename [with extension] to which changes are to be made : " filename
 
 	# Starting the bombing process
-	echo -e "\nSTARTING THE COMMITS BOMBING...[!]"
-	echo -e "Changes are to be made to the file '${filename}'...[!]"
+	echo -e "\n${BLUE}STARTING THE COMMITS BOMBING...${DEFCOL}[${YELLOW}!${DEFCOL}]"
+	echo -e "Changes are to be made to the file '${GREEN}${filename}${DEFCOL}'...[${YELLOW}!${DEFCOL}]\n"
 	startedOn=$( date )
 	for commitNumber in $( seq 1 ${amountOfCommits} ); do
 		# First making changes in the source files for allowing for the commits
@@ -80,24 +109,23 @@ elif [[ ${choice} == "2" ]]; then
 
 		# Calling the commits bomber function in order to do a commit with currently made changes
 		commit
-		echo -e "[!] Commit-${commitNumber} made successfully"
+		echo -e "[${GREEN}!${DEFCOL}] Commit-${GREEN}${commitNumber}${DEFCOL} made successfully"
 	done
 
-	echo -e "\nFINISHED COMMITS BOMBING...[!]"
-elif [[ ${choice} == "3" ]]; then
+	echo -e "\nFINISHED COMMITS BOMBING...[${GREEN}!${DEFCOL}]"
+elif [[ $choice == "3" ]]; then
 	# If the user choosed the option to mass commit an existing GIT repository but with reseting the file at every change, then we continue to complete the task
 
 	# Displaying some warning messages to the user
 	clear
-	echo -e "\nSome points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. After the commits bombing, don't forget to push the changes to the remote origin.\n"
+	echo -e "\n${RED}[${DEFCOL} Some points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. After the commits bombing, don't forget to push the changes to the remote origin. ${RED}]${DEFCOL}\n"
 
 	# Asking the user for the amount of commits that are to be made
 	read -p "Enter the amount of commits : " amountOfCommits
 
 	# Starting the bombing process
-	echo -e "\nSTARTING THE COMMITS BOMBING...[!]"
-	echo -e "Changes will be made by default to the file 'test.txt'...[!]"
-	echo -e ""
+	echo -e "\n${BLUE}STARTING THE COMMITS BOMBING...${DEFCOL}[${YELLOW}!${DEFCOL}]"
+	echo -e "Changes will be made by default to the file '${GREEN}test.txt${DEFCOL}'...[${YELLOW}!${DEFCOL}]\n"
 	startedOn=$( date )
 	for commitNumber in $( seq 1 ${amountOfCommits} ); do
 		# First making changes in the source files for allowing for the commits
@@ -105,16 +133,16 @@ elif [[ ${choice} == "3" ]]; then
 
 		# Calling the commits bomber function in order to do a commit with currently made changes
 		commit
-		echo -e "[!] Commit-${commitNumber} made successfully"
+		echo -e "[${GREEN}!${DEFCOL}] Commit-${GREEN}${commitNumber}${DEFCOL} made successfully"
 	done
 
-	echo -e "\nFINISHED COMMITS BOMBING...[!]"
-elif [[ ${choice} == "4" ]]; then
+	echo -e "\nFINISHED COMMITS BOMBING...[${GREEN}!${DEFCOL}]"
+elif [[ $choice == "4" ]]; then
 	# If the user choosed the option to mass commit an existing GIT repository but with reseting the user specified file at every change, then we continue to complete the task
 
 	# Displaying some warning messages to the user
 	clear
-	echo -e "\nSome points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. Make sure the filename you entered is of proper extension.\n4. After the commits bombing, don't forget to push the changes to the remote origin.\n"
+	echo -e "\n${RED}[${DEFCOL} Some points to be noted before proceeding :\n1. Make sure that GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n3. Make sure the filename you entered is of proper extension.\n4. After the commits bombing, don't forget to push the changes to the remote origin. ${RED}]${DEFCOL}\n"
 
 	# Asking the user for the amount of commits that are to be made
 	read -p "Enter the amount of commits : " amountOfCommits
@@ -123,8 +151,8 @@ elif [[ ${choice} == "4" ]]; then
 	read -p "Enter the filename [with extension] to which changes are to be made : " filename
 
 	# Starting the bombing process
-	echo -e "\nSTARTING THE COMMITS BOMBING...[!]"
-	echo -e "Changes are to be made to the file '${filename}'...[!]"
+	echo -e "\n${BLUE}STARTING THE COMMITS BOMBING...${DEFCOL}[${YELLOW}!${DEFCOL}]"
+	echo -e "Changes are to be made to the file '${GREEN}${filename}${DEFCOL}'...[${YELLOW}!${DEFCOL}]\n"
 	startedOn=$( date )
 	for commitNumber in $( seq 1 ${amountOfCommits} ); do
 		# First making changes in the source files for allowing for the commits
@@ -132,16 +160,16 @@ elif [[ ${choice} == "4" ]]; then
 
 		# Calling the commits bomber function in order to do a commit with currently made changes
 		commit
-		echo -e "[!] Commit-${commitNumber} made successfully"
+		echo -e "[${GREEN}!${DEFCOL}] Commit-${GREEN}${commitNumber}${DEFCOL} made successfully"
 	done
 
-	echo -e "\nFINISHED COMMITS BOMBING...[!]"
+	echo -e "\nFINISHED COMMITS BOMBING...[${GREEN}!${DEFCOL}]"
 elif [[ $choice == "5" ]]; then
-	# If the user chooses the option to do mass empty commits, then we continue to complete the task
+	# If the user chooses the option to do empty mass commits, then we continue to complete the task
 
 	# Displaying some warning messages to the user
 	clear
-	echo -e "\nSome points to be noted before proceeding : \n1. Make sure the GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n"
+	echo -e "\n${RED}[${DEFCOL} Some points to be noted before proceeding : \n1. Make sure the GIT software is installed properly on the system you are currently operating on.\n2. Make sure you are in the folder that you want to mass commit bomb on, otherwise wrong folders will be mass bombed.\n ${RED}]${DEFCOL}"
 
 	# Asking the user for the amounts of commits to be done
 	read -p "Enter the amount of commits (0 for inifinite) : " amountOfCommits
@@ -157,7 +185,7 @@ elif [[ $choice == "5" ]]; then
 			# Calling the empty commit function
 			emptyCommit
 			commitNumber=$(($commitNumber+1))
-			echo -e "[!] Empty commit-${commitNumber} made successfully"
+			echo -e "[${GREEN}!${DEFCOL}] Empty commit-${GREEN}${commitNumber}${DEFCOL} made successfully"
 		done
 	else
 		# If the user enters any other value other than 0, then we continue
@@ -165,17 +193,17 @@ elif [[ $choice == "5" ]]; then
 		for commitNumber in $( seq 1 ${amountOfCommits} ); do
 			# Calling the empty commit function
 			emptyCommit
-			echo -e "[!] Empty commit-${commitNumber} made successfully"
+			echo -e "[${GREEN}!${DEFCOL}] Empty commit-${GREEN}${commitNumber}${DEFCOL} made successfully"
 		done
 	fi
 
-	echo -e "\nFINISHED COMMITS BOMBING...[!]"
-elif [[ ${choice} == "0" ]]; then
+	echo -e "\nFINISHED COMMITS BOMBING...[${GREEN}!${DEFCOL}]"
+elif [[ $choice == "0" ]]; then
 	# If the user entered the option to exit the script, then we exit the script
 
 	exit
 else
 	# If the user entered option is undefined, then we display the error message to the user
 
-	echo -e "\033[07;91m[ Error : No such options '${choice}' ]\033[00m"
+	echo -e "${RED_REV}[ Error : No such options '${choice}' ]${DEFCOL}"
 fi
